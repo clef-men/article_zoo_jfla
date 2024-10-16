@@ -1,1 +1,9 @@
 \section{Conclusion and future work}
+
+The development of \Zoo is still ongoing.
+It supports a limited fragment of \OCaml that is sufficient for most of our needs.
+Its main weakness so far is its memory model, which is sequentially consistent as opposed to the relaxed \OCaml~5 memory model.
+
+\Zoo is not yet available on \texttt{opam} but can be installed and used in other \Coq projects.
+We provide a \href{https://github.com/clef-men/zoo_demo}{minimal example} demonstrating its use.
+We are also working on integrating \texttt{ocaml2zoo} with \texttt{dune}.

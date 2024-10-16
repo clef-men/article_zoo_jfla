@@ -64,6 +64,21 @@ Currently, it mainly includes standard data structures like: array (\mintinline{
 
 \subsection{Physical equality}
 
+In \Zoo, a value is either a bool, an integer, a memory location, a function or an immutable block.
+To deal with physical equality in the semantics, we have to specify what guarantees we get when 1) physical comparison returns \mintinline{ocaml}{true} and 2) when it returns \mintinline{ocaml}{false}.
+We assume that the program is semantically well typed, if not syntactically well typed, in the sense that compared values are loosely compatible: a boolean may be compared with another boolean or a location, an integer may be compared with another integer or a location, an immutable block may be compared with another immutable block or a location.
+This means we never physically compare, \eg, a boolean and an integer, an integer and an immutable block.
+If we wanted to allow it, we would have to extend the semantics of physical comparison to account for conflicts in the memory representation of values.
+
+For booleans, integers and memory locations, the semantics of physical equality is plain equality.
+For abstract values (functions and immutable blocks), the semantics is relaxed: \mintinline{ocaml}{true} means the values are structurally equal, hence they are equal in \Coq; \mintinline{ocaml}{false} means basically nothing, we do not know because, \eg, two immutable blocks may have distinct identities but same content.
+
+To address the second example of \cref{sec:introduction}, we add a twist.
+By using the \texttt{Reveal} primitive on an immutable block, we get the same block annotated with an abstract identifier.
+The meaning is this identifier is: if physical comparison on two identified blocks returns \mintinline{ocaml}{false}, the two identifiers are necessarily distinct.
+The underling assumption that we make here, which is hopefully correct in \OCaml, is that the compiler may only introduce sharing.
+Thanks to this trick, the example can be verified.
+
 \subsection{Structural equality}
 
 Structural equality is also supported.
