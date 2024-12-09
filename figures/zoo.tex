@@ -41,7 +41,7 @@
     binary operator &
     $\otimes$
     & $\Coloneqq$ &
-    $\texttt{+} \mid \texttt{-} \mid \texttt{*} \mid \texttt{`quot`} \mid \texttt{`rem`}$
+    $\texttt{+} \mid \texttt{-} \mid \texttt{*} \mid \texttt{`quot`} \mid \texttt{`rem`} \mid \texttt{`land`} \mid \texttt{`lor`} \mid \texttt{`lsl`} \mid \texttt{`lsr`}$
   \\
     && | &
     $\texttt{<=} \mid \texttt{<} \mid \texttt{>=} \mid \texttt{>} \mid \texttt{=} \mid \texttt{≠} \mid \texttt{==} \mid \texttt{!=}$
@@ -70,7 +70,7 @@
     $\oplus e \mid e_1 \otimes e_2$
   \\
     && | &
-    $\texttt{if:}\ e_0\ \texttt{then}\ e_1\ (\texttt{else}\ e_2)^? \mid \texttt{ifnot:}\ e_0\ \texttt{then}\ e_1$
+    $\texttt{if:}\ e_0\ \texttt{then}\ e_1\ (\texttt{else}\ e_2)^?$
   \\
     && | &
     $\texttt{for:}\ x\ \texttt{:=}\ e_1\ \texttt{to}\ e_2\ \texttt{begin}\ e_3\ \texttt{end}$
@@ -82,25 +82,22 @@
     $\texttt{[]} \mid e_1\ \texttt{::}\ e_2$
   \\
     && | &
-    $\texttt{Alloc}\ e_1\ e_2 \mid \texttt{ref}\ e \mid \texttt{!} e \mid e_1\ \texttt{<-}\ e_2$
-  \\
-    && | &
     $\texttt{‘} C\ \texttt{\{} e_1 \texttt{,} \dots \texttt{,} e_n \texttt{\}} \mid \texttt{\{} e_1 \texttt{,} \dots \texttt{,} e_n \texttt{\}} \mid e \texttt{.\{} \mathit{fld} \texttt{\}} \mid e_1\ \texttt{<-\{} \mathit{fld} \texttt{\}}\ e_2$
   \\
     && | &
-    $\texttt{Reveal}\ e \mid \texttt{GetTag}\ e \mid \texttt{GetSize}\ e$
+    $\texttt{ref}\ e \mid \texttt{!} e \mid e_1\ \texttt{<-}\ e_2$
   \\
     && | &
     $\texttt{match:}\ e_0\ \texttt{with}\ \mathit{br}_1 \texttt{|} \dots \texttt{|}\ \mathit{br}_n\ (\texttt{|\_}\ (\texttt{as}\ s)^?\ \texttt{=>}\ e)^?\ \texttt{end}$
-  \\
-    && | &
-    $\texttt{Fork}\ e \mid \texttt{Yield}$
   \\
     && | &
     $e \texttt{.[} \mathit{fld} \texttt{]} \mid \texttt{Xchg}\ e_1\ e_2 \mid \texttt{CAS}\ e_1\ e_2\ e_3 \mid \texttt{FAA}\ e_1\ e_2$
   \\
     && | &
     $\texttt{Proph} \mid \texttt{Resolve}\ e_0\ e_1\ e_2$
+  \\
+    && | &
+    $\texttt{Reveal}\ e$
   \\
     branch &
     $\mathit{br}$
@@ -124,6 +121,6 @@
     && | &
     $\texttt{[]} \mid v_1\ \texttt{::}\ v_2$
 \end{tabular}
-\caption{\Zoo syntax (omitting mutually recursive toplevel functions)}
+\caption{\ZooLang syntax (omitting mutually recursive toplevel functions)}
 \label{fig:zoo}
 \end{figure}

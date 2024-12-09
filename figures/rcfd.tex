@@ -8,6 +8,9 @@ type t =
     mutable state: state [@atomic];
   }
 
+let make fd =
+  { ops= 0; state= Open fd }
+
 let closed = Closing (fun () -> ())
 let close t =
   match t.state with
