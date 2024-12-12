@@ -65,18 +65,10 @@ For instance, the specification of the \mintinline{ocaml}{stack_push} function c
 
 \begin{minted}{coq}
 Lemma stack_push_spec t ι v :
-  <<<
-    stack_inv t ι
-  | ∀∀ vs, stack_model t vs
-  >>>
+  <<< stack_inv t ι | ∀∀ vs, stack_model t vs >>>
     stack_push t v @ ↑ι
-  <<<
-    stack_model t (v :: vs)
-  | RET (); True
-  >>>.
-Proof.
-  ...
-Qed.
+  <<< stack_model t (v :: vs) | RET (); True >>>.
+Proof. ... Qed.
 \end{minted}
 
 Here, we use a \emph{logically atomic specification}~\cite{DBLP:conf/ecoop/PintoDG14}, which has been proven~\cite{DBLP:journals/pacmpl/BirkedalDGJST21} to be equivalent to \emph{linearizability}~\cite{DBLP:journals/toplas/HerlihyW90} in sequentially consistent memory models.

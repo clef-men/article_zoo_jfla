@@ -21,8 +21,7 @@ Given this incantation, one may directly use the tags \texttt{Nil} and \texttt{C
 Definition map : val :=
   rec: "map" "fn" "t" =>
     match: "t" with
-    | Nil =>
-        §Nil
+    | Nil => §Nil
     | Cons "x" "t" =>
         let: "y" := "fn" "x" in
         ‘Cons( "y", "map" "fn" "t" )
@@ -42,8 +41,7 @@ Notation "'f2'" := (in_type "t" 1) (in custom zoo_field).
 Definition swap : val :=
   fun: "t" =>
     let: "f1" := "t".{f1} in
-    "t" <-{f1} "t".{f2} ;;
-    "t" <-{f2} "f1".
+    "t" <-{f1} "t".{f2} ;; "t" <-{f2} "f1".
 \end{minted}
 
 \subsection{Mutually recursive functions}
@@ -59,7 +57,6 @@ Definition f_g := (
   recs: "f" "x" => "g" "x"
   and:  "g" "x" => "f" "x"
 )%zoo_recs.
-
 (* boilerplate *)
 Definition f := ValRecs 0 f_g.
 Definition g := ValRecs 1 f_g.
@@ -110,53 +107,52 @@ For \mintinline{ocaml}{Rcfd.make}, it generates:
 
 \begin{minted}{coq}
 Definition rcfd_make : val :=
-  fun: "fd" =>
-    { #0, Reveal ‘Open( "fd" ) }.
+  fun: "fd" => { #0, Reveal ‘Open( "fd" ) }.
 \end{minted}
 
 Given this semantics and having revealed the \mintinline{ocaml}{Open} block, we can verify the \mintinline{ocaml}{close} function.
 Indeed, if the first \mintinline{ocaml}{Atomic.compare_and_set} fails, we now know that the identifiers of the two blocks, if any, are distinct.
 As there is only one \mintinline{ocaml}{Open} block whose identifier does not change, it cannot be the case that the current state is \mintinline{ocaml}{Open}, hence it is \mintinline{ocaml}{Closing} and we can conclude.
 
-\subsection{Structural equality}
-
-Structural equality is also supported.
-More precisely, it is not part of the semantics of the language but axiomatized on top of it\footnote{We could also have implemented it in \Zoo, but that would require more low-level primitives.}.
-The reason is that it is in fact difficult to specify for arbitrary values.
-Indeed, we have to handle not only abstract tree-like values (booleans, integers, immutable blocks) but also pointers to memory blocks for records.
-In general, we basically have to compare graphs---which implies structural comparison may diverge.
-
-Accordingly, the specification of $v_1\ \texttt{=}\ v_2$ requires the (partial) ownership of a \emph{memory footprint} corresponding to the union of the two compared graphs, giving the right to traverse them safely.
-If it terminates, the comparison decides whether the two graphs are isomorphic.
-In \Iris, this gives:
-
-\begin{minted}{coq}
-Axiom structeq_spec : ∀ `{zoo_G : !ZooG Σ} {v1 v2} footprint,
-  val_traversable footprint v1 →
-  val_traversable footprint v2 →
-  {{{ structeq_footprint footprint }}}
-    v1 = v2
-  {{{ b, RET #b;
-    structeq_footprint footprint ∗
-    ⌜ if b then val_structeq footprint v1 v2
-      else val_structne footprint v1 v2 ⌝
-  }}}.
-\end{minted}
-
-Obviously, this general specification is not very convenient to work with.
-Fortunately, for abstract tree-like values, we get a much simpler variant:
-
-\begin{minted}{coq}
-Lemma structeq_spec_abstract `{zoo_G : !ZooG Σ} v1 v2 :
-  val_is_abstract v1 →
-  val_is_abstract v2 →
-  {{{ True }}}
-    v1 = v2
-  {{{ RET #(bool_decide (v1 = v2)); True }}}
-Proof.
-  ...
-Qed.
-\end{minted}
+%\subsection{Structural equality}
+%
+%Structural equality is also supported.
+%More precisely, it is not part of the semantics of the language but axiomatized on top of it\footnote{We could also have implemented it in \Zoo, but that would require more low-level primitives.}.
+%The reason is that it is in fact difficult to specify for arbitrary values.
+%Indeed, we have to handle not only abstract tree-like values (booleans, integers, immutable blocks) but also pointers to memory blocks for records.
+%In general, we basically have to compare graphs---which implies structural comparison may diverge.
+%
+%Accordingly, the specification of $v_1\ \texttt{=}\ v_2$ requires the (partial) ownership of a \emph{memory footprint} corresponding to the union of the two compared graphs, giving the right to traverse them safely.
+%If it terminates, the comparison decides whether the two graphs are isomorphic.
+%In \Iris, this gives:
+%
+%\begin{minted}{coq}
+%Axiom structeq_spec : ∀ `{zoo_G : !ZooG Σ} {v1 v2} footprint,
+%  val_traversable footprint v1 →
+%  val_traversable footprint v2 →
+%  {{{ structeq_footprint footprint }}}
+%    v1 = v2
+%  {{{ b, RET #b;
+%    structeq_footprint footprint ∗
+%    ⌜ if b then val_structeq footprint v1 v2
+%      else val_structne footprint v1 v2 ⌝
+%  }}}.
+%\end{minted}
+%
+%Obviously, this general specification is not very convenient to work with.
+%Fortunately, for abstract tree-like values, we get a much simpler variant:
+%
+%\begin{minted}{coq}
+%Lemma structeq_spec_abstract `{zoo_G : !ZooG Σ} v1 v2 :
+%  val_is_abstract v1 →
+%  val_is_abstract v2 →
+%  {{{ True }}}
+%    v1 = v2
+%  {{{ RET #(bool_decide (v1 = v2)); True }}}
+%Proof.
+%  ...
+%Qed.
+%\end{minted}
 
 \subsection{Concurrent primitives}
 \label{sec:atomic}

@@ -28,8 +28,6 @@ It is clear that two pointers being distinct does not imply the pointed memory b
 From the viewpoint of formal verification, this means we have to carefully design the semantics of the language to be able to reason about physical equality and other subtleties of concurrent programs.
 Essentially, the conclusion we can draw is that the semantics of physical equality and therefore \mintinline{ocaml}{Atomic.compare_and_set} is non-deterministic: we cannot determine the result of physical comparison just by looking at the abstract values.
 
-\input{figures/rcfd}
-
 \paragraph{Example 2: when physical identity matters.}
 
 Consider another example given in \cref{fig:rcfd}: the \mintinline{ocaml}{Rcfd.close}\footnote{\url{https://github.com/ocaml-multicore/eio/blob/main/lib_eio/unix/rcfd.ml}} function from the \Eio~\cite{eio} library.
@@ -52,3 +50,5 @@ However, the direct practical aim of this work---the verification of real-life l
 
 In this paper, we show how we have designed a practical framework, \Zoo\footnote{\url{https://github.com/clef-men/zoo}}, following this guideline.
 We review the works related to the verification of \OCaml programs in \cref{sec:related}; we describe our framework in \cref{sec:zoo}; we detail the important features, including the treatment of physical equality, in \cref{sec:features} before concluding.
+
+\input{figures/rcfd}
