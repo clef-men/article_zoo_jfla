@@ -37,7 +37,7 @@ The \texttt{Proph} and \texttt{Resolve} constructs are used to model \emph{proph
 Finally, \texttt{Reveal} is a special source construct that we introduce to handle physical equality.
 We demystify it in \cref{sec:physical_equality}.
 
-\paragraph{Translation from \OCaml to \ZooLang}
+\paragraph{Translation from \OCaml to \ZooLang.}
 
 While \ZooLang lives in \Coq, we want to verify \OCaml programs.
 To connect them, we provide a tool to automatically translate \OCaml source files\footnote{Actually, \texttt{ocaml2zoo} processes binary annotation files (\texttt{.cmt} files).} into \Coq files containing \ZooLang code: \texttt{ocaml2zoo}.
@@ -53,8 +53,7 @@ Definition stack_push : val :=
     let: "old" := !"t" in
     let: "new_" := "v" :: "old" in
     if: ~ CAS "t".[contents] "old" "new_" then (
-      domain_yield () ;;
-      "push" "t" "v"
+      domain_yield () ;; "push" "t" "v"
     ).
 \end{minted}
 
