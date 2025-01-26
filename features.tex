@@ -67,7 +67,7 @@ Instance : AsValRecs' g 1 f_g [f;g]. Proof. done. Qed.
 \subsection{Standard library}
 
 To save users from reinventing the wheel, we provide a standard library---more or less a subset of the \OCaml standard library.
-Currently, it mainly includes standard data structures like: array (\mintinline{ocaml}{Array}), resizable array (\mintinline{ocaml}{Dynarray}), list (\mintinline{ocaml}{List}), stack (\mintinline{ocaml}{Stack}), queue (\mintinline{ocaml}{Queue}), double-ended queue, mutex (\mintinline{ocaml}{Mutex}), condition variable (\mintinline{ocaml}{Condition}).o
+Currently, it mainly includes standard data structures like: array (\mintinline{ocaml}{Array}), resizable array (\mintinline{ocaml}{Dynarray}), list (\mintinline{ocaml}{List}), stack (\mintinline{ocaml}{Stack}), queue (\mintinline{ocaml}{Queue}), double-ended queue, mutex (\mintinline{ocaml}{Mutex}), condition variable (\mintinline{ocaml}{Condition}).
 
 Each of these standard modules contains \ZooLang functions and their verified specifications.
 These specifications are modular: they can be used to verify more complex data structures.
